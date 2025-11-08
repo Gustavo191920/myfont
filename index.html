@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bold Converter</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+
+        textarea {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 16px;
+            color: #fff;
+            resize: vertical;
+            min-height: 120px;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #2a2a2a;
+            border-color: #555;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 12px 20px;
+            border-radius: 6px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bold Unicode Converter</h1>
+        
+        <textarea id="input" placeholder="Digite seu texto aqui..."></textarea>
+        
+        <textarea id="output" placeholder="Texto convertido aparecerá aqui..." readonly></textarea>
+        
+        <div class="buttons">
+            <button onclick="copyText()">Copiar</button>
+            <button onclick="clearText()">Limpar</button>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">Copiado!</div>
+
+    <script>
+        const boldMap = {
+            'A':'𝗔','B':'𝗕','C':'𝗖','D':'𝗗','E':'𝗘','F':'𝗙','G':'𝗚','H':'𝗛','I':'𝗜','J':'𝗝',
+            'K':'𝗞','L':'𝗟','M':'𝗠','N':'𝗡','O':'𝗢','P':'𝗣','Q':'𝗤','R':'𝗥','S':'𝗦','T':'𝗧',
+            'U':'𝗨','V':'𝗩','W':'𝗪','X':'𝗫','Y':'𝗬','Z':'𝗭',
+            'a':'𝗮','b':'𝗯','c':'𝗰','d':'𝗱','e':'𝗲','f':'𝗳','g':'𝗴','h':'𝗵','i':'𝗶','j':'𝗷',
+            'k':'𝗸','l':'𝗹','m':'𝗺','n':'𝗻','o':'𝗼','p':'𝗽','q':'𝗾','r':'𝗿','s':'𝘀','t':'𝘁',
+            'u':'𝘂','v':'𝘃','w':'𝘄','x':'𝘅','y':'𝘆','z':'𝘇',
+            '0':'𝟬','1':'𝟭','2':'𝟮','3':'𝟯','4':'𝟰','5':'𝟱','6':'𝟲','7':'𝟳','8':'𝟴','9':'𝟵'
+        };
+
+        function convert(text) {
+            return text.split('').map(char => boldMap[char] || char).join('');
+        }
+
+        document.getElementById('input').addEventListener('input', function() {
+            document.getElementById('output').value = convert(this.value);
+        });
+
+        function copyText() {
+            const output = document.getElementById('output');
+            if (output.value) {
+                output.select();
+                document.execCommand('copy');
+                
+                const notification = document.getElementById('notification');
+                notification.style.display = 'block';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        function clearText() {
+            document.getElementById('input').value = '';
+            document.getElementById('output').value = '';
+        }
+    </script>
+</body>
+</html>
